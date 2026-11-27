@@ -18,6 +18,7 @@ Plateforme de conciergerie en Côte d'Ivoire, pour la diaspora et les résidents
 - Une modification de fond se reporte dans **tous** les documents concernés (cadrage, schéma, maquettes), pas dans un seul.
 
 ## Repères à ne pas perdre
+- **Identité GSF : rouge, blanc et noir.** Logo « GSF · Géomètre Son Femme » (`mobile/assets/images/logo-gsf.png`). Rouge du logo #F42409 ; textes et boutons en #D91F07 (lisible sur blanc). Couleurs de l'app dans `mobile/src/lib/theme.ts`.
 - Stack : **tout le serveur en Laravel** (API pour l'app, back-office Filament, site vitrine Blade), PostgreSQL. App mobile **React Native (Expo)**, une seule app pour les rôles Client, Agent et Coordinateur.
 - Un **coordinateur** reçoit toutes les demandes et les affecte, avec **un seul agent par demande**.
 - Le foncier est géré par le **cabinet de géomètres de GSF** (ses géomètres sont des agents). Pas de partenaire externe pour le foncier. Les partenaires sont seulement les propriétaires de résidences et les loueurs de véhicules.

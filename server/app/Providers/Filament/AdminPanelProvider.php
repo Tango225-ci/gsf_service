@@ -28,9 +28,12 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->brandName('GSF Admin')
+            ->brandLogo(asset('images/logo-gsf.png'))
+            ->brandLogoHeight('2.5rem')
             ->colors([
-                // Vert de la marque, repris des maquettes (#0D6A4E)
-                'primary' => Color::hex('#0D6A4E'),
+                // Rouge de GSF (rouge, blanc, noir), assombri pour rester lisible sur fond blanc
+                'primary' => Color::hex('#D91F07'),
+                'gray' => Color::Neutral,
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')

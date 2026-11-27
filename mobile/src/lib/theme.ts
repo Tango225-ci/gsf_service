@@ -1,21 +1,28 @@
-/** Couleurs et mesures reprises des maquettes (docs/gsf-maquettes.html). */
+/**
+ * Couleurs de GSF : rouge, blanc et noir (logo « GSF · Géomètre Son Femme »).
+ * Le rouge exact du logo est #F42409 ; pour les textes et boutons on prend un rouge
+ * à peine plus foncé (#D91F07), lisible sur fond blanc (contraste 5:1).
+ */
 export const couleurs = {
-  fond: '#F3F6F4',
-  ecran: '#F7F9F8',
+  fond: '#F4F4F4',
+  ecran: '#FAFAFA',
   carte: '#FFFFFF',
-  texte: '#14211C',
-  discret: '#5A6A64',
-  bordure: '#D9E2DE',
-  marque: '#0D6A4E',
-  marqueClair: '#E0F0E9',
+  texte: '#111111',
+  discret: '#5E5E5E',
+  bordure: '#E2E2E2',
+  marque: '#D91F07',
+  marqueLogo: '#F42409',
+  marqueClair: '#FDECE9',
   surMarque: '#FFFFFF',
-  accent: '#D9681F',
-  accentClair: '#FBE8D9',
-  ok: '#1E8A5A',
-  attention: '#B7791F',
-  retard: '#C2412D',
-  retardClair: '#FBE3DE',
-  gris: '#8A9690',
+  // Noir : second ton de la marque (badges, éléments à traiter)
+  accent: '#111111',
+  accentClair: '#EBEBEB',
+  ok: '#1E7A4F',
+  attention: '#A15C07',
+  // Retards en ambre foncé, pour ne pas se confondre avec le rouge de la marque
+  retard: '#A15C07',
+  retardClair: '#FDF1DE',
+  gris: '#9A9A9A',
 };
 
 export const rayons = { petit: 8, moyen: 12, grand: 20 };

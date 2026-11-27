@@ -1,14 +1,6 @@
-import { Onglets } from '@/components/Onglets';
+import { Stack } from 'expo-router';
 
+/** Partie agent : les onglets, plus les écrans qui s'ouvrent par-dessus. */
 export default function LayoutAgent() {
-  return (
-    <Onglets
-      onglets={[
-        { nom: 'index', titre: 'Tâches', icone: 'checkbox-outline' },
-        { nom: 'messages', titre: 'Messages', icone: 'chatbubbles-outline' },
-        { nom: 'partenaires', titre: 'Partenaires', icone: 'business-outline' },
-        { nom: 'profil', titre: 'Profil', icone: 'person-outline' },
-      ]}
-    />
-  );
+  return <Stack screenOptions={{ headerShown: false }} />;
 }

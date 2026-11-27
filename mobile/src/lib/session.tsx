@@ -16,7 +16,7 @@ interface Session {
    * Développement uniquement, en attendant la connexion (lot 1) :
    * entre dans l'app avec un rôle choisi, sans compte ni serveur.
    */
-  entrerEnDemo(role: RoleApp): void;
+  entrerEnDemo(role: RoleApp, prenom?: string, nom?: string): void;
 }
 
 const ContexteSession = createContext<Session | null>(null);
@@ -66,9 +66,9 @@ export function FournisseurSession({ children }: { children: ReactNode }) {
       async rafraichir() {
         setUtilisateur(await api.get<Utilisateur>('/moi'));
       },
-      entrerEnDemo(role) {
+      entrerEnDemo(role, prenom, nom) {
         if (!__DEV__) return;
-        setUtilisateur({ id: `demo-${role}`, prenom: PRENOMS_DEMO[role], nom: 'Démo', telephone: null, email: null, role });
+        setUtilisateur({ id: `demo-${role}`, prenom: prenom ?? PRENOMS_DEMO[role], nom: nom ?? 'Démo', telephone: null, email: null, role });
       },
     }),
     [chargement, utilisateur, ouvrirSession, deconnecter],

@@ -1,14 +1,6 @@
-import { Onglets } from '@/components/Onglets';
+import { Stack } from 'expo-router';
 
+/** Partie coordinateur : les onglets, plus les écrans qui s'ouvrent par-dessus. */
 export default function LayoutCoordinateur() {
-  return (
-    <Onglets
-      onglets={[
-        { nom: 'index', titre: 'À affecter', icone: 'git-branch-outline' },
-        { nom: 'equipe', titre: 'Équipe', icone: 'people-outline' },
-        { nom: 'messages', titre: 'Messages', icone: 'chatbubbles-outline' },
-        { nom: 'profil', titre: 'Profil', icone: 'person-outline' },
-      ]}
-    />
-  );
+  return <Stack screenOptions={{ headerShown: false }} />;
 }

@@ -1,14 +1,11 @@
-import { Onglets } from '@/components/Onglets';
+import { Stack } from 'expo-router';
 
+/** Partie client : les onglets, plus les écrans qui s'ouvrent par-dessus. */
 export default function LayoutClient() {
   return (
-    <Onglets
-      onglets={[
-        { nom: 'index', titre: 'Accueil', icone: 'home-outline' },
-        { nom: 'demandes', titre: 'Demandes', icone: 'document-text-outline' },
-        { nom: 'messages', titre: 'Messages', icone: 'chatbubbles-outline' },
-        { nom: 'profil', titre: 'Profil', icone: 'person-outline' },
-      ]}
-    />
+    <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="(onglets)" />
+      <Stack.Screen name="nouvelle-demande" options={{ presentation: 'modal' }} />
+    </Stack>
   );
 }

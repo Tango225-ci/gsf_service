@@ -14,8 +14,12 @@ function Navigation() {
 
   return (
     <Stack screenOptions={{ headerShown: false }}>
+      {/* Point d'entrée, toujours accessible : il redirige selon la session */}
+      <Stack.Screen name="index" />
       <Stack.Protected guard={!utilisateur}>
         <Stack.Screen name="connexion" />
+        <Stack.Screen name="code" />
+        <Stack.Screen name="inscription" />
       </Stack.Protected>
       <Stack.Protected guard={role === 'client'}>
         <Stack.Screen name="client" />

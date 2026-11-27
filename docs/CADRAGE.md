@@ -198,3 +198,4 @@ Schéma complet, champ par champ : [SCHEMA-BDD.md](SCHEMA-BDD.md) (version 0.1, 
 | 26/11/2026 | Base de développement sur le PostgreSQL 14 déjà installé : base `gsfservice`, compte `gsf_api` (script `database/00_creer_base.sql`) |
 | 27/11/2026 | Lot 0 terminé : Laravel 13, Filament 5, base PostgreSQL complète, rôles, journal des actions, chiffrement, app Expo SDK 58. Le prix à l'unité ne passe pas par une proposition (frais GSF fixes) |
 | 27/11/2026 | Services à prix à l'unité (entretien, gardiennage, suivi de construction…) : **acompte puis solde**, comme les services sur proposition. Seul le prix fixe est payé en totalité à la commande |
+| 27/11/2026 | Identité : couleurs **rouge, blanc et noir**, logo « GSF · Géomètre Son Femme » (rouge #F42409 ; #D91F07 pour les textes et boutons, plus lisible). Fenêtre de connexion : un client non inscrit est invité à créer son compte |
