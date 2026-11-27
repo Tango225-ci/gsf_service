@@ -13,3 +13,8 @@
 # Divers
 .DS_Store
 Thumbs.db
+
+# Outil de captures d'ecran (puppeteer) et images produites
+/outils/captures/node_modules/
+/outils/captures/images/
+/outils/captures/package-lock.json

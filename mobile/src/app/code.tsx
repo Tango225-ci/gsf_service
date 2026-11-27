@@ -1,7 +1,8 @@
 import { useLocalSearchParams } from 'expo-router';
 import { useRef, useState } from 'react';
 import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
-import { Bouton, Ecran, Petit } from '@/components/ui';
+import { EcranConnexion, LienSousCarte } from '@/components/EcranConnexion';
+import { Bouton, Petit } from '@/components/ui';
 import { compteDemo } from '@/lib/demo';
 import { useSession } from '@/lib/session';
 import { couleurs, rayons } from '@/lib/theme';
@@ -19,8 +20,12 @@ export default function SaisieCode() {
   const champ = useRef<React.ComponentRef<typeof TextInput>>(null);
 
   return (
-    <Ecran titre={nouveau ? 'Confirmer mon compte' : 'Code de connexion'} retour>
-      <Petit style={{ fontSize: 15 }}>
+    <EcranConnexion
+      titre={nouveau ? 'Confirmer mon compte' : 'Code de connexion'}
+      retour
+      apresCarte={<LienSousCarte texte="Pas reçu de code ?" lien="Renvoyer" onPress={() => setCode('')} />}
+    >
+      <Petit style={{ fontSize: 15, lineHeight: 22 }}>
         Saisissez le code à 6 chiffres envoyé à <Text style={{ color: couleurs.texte, fontWeight: '600' }}>{vers}</Text>.
       </Petit>
       <Pressable onPress={() => champ.current?.focus()} style={s.cases} accessibilityLabel="Code à 6 chiffres">
@@ -40,6 +45,7 @@ export default function SaisieCode() {
         style={s.cache}
       />
       <Bouton
+        icone="arrow-forward"
         titre={nouveau ? 'Confirmer et entrer' : 'Se connecter'}
         desactive={code.length < LONGUEUR}
         onPress={() => {
@@ -49,14 +55,13 @@ export default function SaisieCode() {
           entrerEnDemo(compte?.role ?? 'client', compte ? prenom : undefined, compte ? reste.join(' ') : undefined);
         }}
       />
-      <Bouton titre="Renvoyer le code" variante="discret" petit onPress={() => setCode('')} />
-    </Ecran>
+    </EcranConnexion>
   );
 }
 
 const s = StyleSheet.create({
-  cases: { flexDirection: 'row', gap: 8, justifyContent: 'center', marginVertical: 12 },
-  case: { width: 46, height: 56, borderRadius: rayons.moyen, borderWidth: 1, borderColor: couleurs.bordure, backgroundColor: couleurs.carte, alignItems: 'center', justifyContent: 'center' },
+  cases: { flexDirection: 'row', gap: 8, justifyContent: 'center', marginVertical: 4 },
+  case: { width: 44, height: 56, borderRadius: rayons.moyen, borderWidth: 1, borderColor: couleurs.bordure, backgroundColor: couleurs.carte, alignItems: 'center', justifyContent: 'center' },
   caseActive: { borderColor: couleurs.marque, borderWidth: 2 },
   chiffre: { fontSize: 24, fontWeight: '700', color: couleurs.texte },
   cache: { position: 'absolute', opacity: 0, height: 1, width: 1 },
