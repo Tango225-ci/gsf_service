@@ -1,0 +1,1166 @@
+<title>GSF Service – Maquettes</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout : document de cadrage à une colonne, nav collante, galeries de téléphones en grille qui passe à une colonne sur mobile */
+:root{
+  --bg:#F3F6F4; --surface:#FFFFFF; --ink:#14211C; --muted:#5A6A64; --line:#D9E2DE;
+  --brand:#0D6A4E; --brand-ink:#FFFFFF; --brand-soft:#E0F0E9;
+  --accent:#D9681F; --accent-soft:#FBE8D9;
+  --ok:#1E8A5A; --warn:#B7791F; --late:#C2412D; --late-soft:#FBE3DE;
+  --frame:#1B2622; --screen:#F7F9F8;
+  --f-display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --f-body:"Inter", "Segoe UI", system-ui, sans-serif;
+  --f-mono:"JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0E1412; --surface:#16201C; --ink:#E4EDE9; --muted:#97A8A1; --line:#2A3832;
+  --brand:#3DB287; --brand-ink:#06120D; --brand-soft:#15342A;
+  --accent:#F0955A; --accent-soft:#3A2416;
+  --ok:#4CC38A; --warn:#E0A84A; --late:#F07A64; --late-soft:#3B1E19;
+  --frame:#000000; --screen:#121A17; color-scheme:dark;}}
+:root[data-theme="dark"]{
+  --bg:#0E1412; --surface:#16201C; --ink:#E4EDE9; --muted:#97A8A1; --line:#2A3832;
+  --brand:#3DB287; --brand-ink:#06120D; --brand-soft:#15342A;
+  --accent:#F0955A; --accent-soft:#3A2416;
+  --ok:#4CC38A; --warn:#E0A84A; --late:#F07A64; --late-soft:#3B1E19;
+  --frame:#000000; --screen:#121A17; color-scheme:dark;}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.55;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-block:0 64px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top, 0px);z-index:10;background:var(--bg)}
+.wrap{max-width:1180px;margin:0 auto}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.15}
+h1{font-size:clamp(30px,5vw,48px);font-weight:700;letter-spacing:-.02em}
+h2{font-size:clamp(24px,3.2vw,32px);font-weight:700;letter-spacing:-.01em}
+h3{font-size:19px;font-weight:600}
+p{margin:0;max-width:68ch}
+.muted{color:var(--muted)}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--brand)}
+code,.mono{font-family:var(--f-mono);font-size:13px}
+
+/* En-tête */
+header.top{padding-block:40px 28px;display:grid;gap:14px;border-bottom:1px solid var(--line)}
+.meta{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:13px;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.status-pill{display:inline-flex;align-items:center;gap:6px;background:var(--accent-soft);color:var(--accent);font-weight:600;font-size:12px;padding:3px 10px;border-radius:99px}
+
+nav.toc{position:sticky;top:env(safe-area-inset-top, 0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line);
+  display:flex;gap:4px;overflow-x:auto;padding-block:10px;scrollbar-width:none}
+nav.toc a{white-space:nowrap;color:var(--muted);text-decoration:none;font-weight:500;font-size:14px;padding:6px 12px;border-radius:8px}
+nav.toc a:hover,nav.toc a:focus-visible{background:var(--surface);color:var(--ink);outline:2px solid var(--brand);outline-offset:-2px}
+
+section{padding-block:48px 8px;display:grid;gap:22px;scroll-margin-top:56px}
+.sec-head{display:grid;gap:8px}
+
+/* Parcours */
+.flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;counter-reset:f}
+.flow li{list-style:none;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px;display:grid;gap:4px;counter-increment:f}
+.flow li::before{content:counter(f);font-family:var(--f-mono);font-size:12px;color:var(--brand);font-weight:500}
+.flow li b{font-size:14px}
+.flow li span{font-size:13px;color:var(--muted)}
+.flow li.who-gsf{background:var(--brand-soft);border-color:transparent}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:6px;border:1px solid var(--line);background:var(--surface)}
+.legend i.g{background:var(--brand-soft);border-color:transparent}
+
+/* Galerie de téléphones */
+.group-title{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.tag{font-size:12px;font-weight:600;padding:2px 9px;border-radius:99px;background:var(--brand-soft);color:var(--brand)}
+.tag.agent{background:var(--accent-soft);color:var(--accent)}
+.phones{display:grid;grid-template-columns:repeat(auto-fill,minmax(272px,1fr));gap:28px 22px;justify-items:center}
+figure{margin:0;display:grid;gap:10px;justify-items:center;width:100%;max-width:290px}
+figcaption{font-size:13px;color:var(--muted);text-align:center;max-width:280px}
+figcaption b{display:block;color:var(--ink);font-size:14px}
+.phone{width:272px;max-width:100%;height:560px;border:9px solid var(--frame);border-radius:38px;background:var(--screen);overflow:hidden;
+  display:flex;flex-direction:column;font-size:12.5px;line-height:1.4;box-shadow:0 18px 40px -24px rgba(0,0,0,.45);position:relative}
+.sb{display:flex;justify-content:space-between;padding:8px 18px 4px;font-size:11px;font-weight:600;color:var(--ink)}
+.appbar{display:flex;align-items:center;gap:8px;padding:6px 14px 10px}
+.appbar .t{font-weight:700;font-size:15px;font-family:var(--f-display)}
+.appbar .back{font-size:16px;color:var(--muted)}
+.scr{flex:1;overflow:hidden;padding:0 12px 10px;display:flex;flex-direction:column;gap:9px}
+.tabs{display:flex;justify-content:space-around;border-top:1px solid var(--line);background:var(--surface);padding:7px 4px 12px;font-size:10px;color:var(--muted)}
+.tabs span{display:grid;justify-items:center;gap:2px}
+.tabs span::before{content:"";width:18px;height:18px;border-radius:6px;background:var(--line)}
+.tabs span.on{color:var(--brand);font-weight:600}
+.tabs span.on::before{background:var(--brand)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px;display:grid;gap:6px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.small{font-size:11px;color:var(--muted)}
+.chip{display:inline-block;font-size:10.5px;font-weight:600;padding:2px 8px;border-radius:99px;background:var(--brand-soft);color:var(--brand);white-space:nowrap}
+.chip.o{background:var(--accent-soft);color:var(--accent)}
+.chip.r{background:var(--late-soft);color:var(--late)}
+.chip.n{background:transparent;border:1px solid var(--line);color:var(--muted);font-weight:500}
+.chips{display:flex;flex-wrap:wrap;gap:5px}
+.btn{display:block;text-align:center;background:var(--brand);color:var(--brand-ink);font-weight:600;border-radius:10px;padding:9px;font-size:12.5px}
+.btn.ghost{background:transparent;color:var(--brand);border:1px solid var(--brand)}
+.btn.sm{padding:6px;font-size:11.5px}
+.btns{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.svc{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.svc div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px;display:grid;gap:6px;font-weight:600;font-size:12px}
+.svc div::before{content:"";width:22px;height:22px;border-radius:7px;background:var(--brand-soft)}
+.svc div .p{font-size:10.5px;color:var(--muted);font-weight:500;font-variant-numeric:tabular-nums}
+.svc div.wide{grid-column:1/-1;grid-template-columns:22px 1fr auto;align-items:center}
+.plist div{display:flex;justify-content:space-between;gap:8px;font-variant-numeric:tabular-nums}
+.plist div b{white-space:nowrap}
+.bo-tabs{display:flex;gap:4px;border-bottom:1px solid var(--line)}
+.bo-tabs span{padding:7px 12px;color:var(--muted)}
+.bo-tabs span.on{color:var(--brand);font-weight:600;box-shadow:inset 0 -2px 0 var(--brand)}
+.cfg{display:grid;grid-template-columns:1fr 230px;gap:14px;align-items:start}
+.cfg > *{min-width:0}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px;display:grid;gap:8px}
+.panel .field label{font-size:11px}
+.hidden-col{color:var(--muted);font-style:italic}
+.where{display:grid;gap:8px;margin:0;padding:0;counter-reset:w}
+.where li{list-style:none;display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start;counter-increment:w}
+.where li::before{content:counter(w);display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--brand-soft);color:var(--brand);font-weight:700;font-size:12px}
+.where li span{color:var(--muted);font-size:14px}
+.checklist{display:grid;gap:6px;margin:0;padding-left:18px}
+.checklist li{font-size:14px}
+.checklist li span{color:var(--muted)}
+.check.todo::before{content:"";background:transparent;border:1.5px solid var(--muted)}
+.svc-list{display:grid;gap:6px}
+.svc-list .card{padding:8px 10px;gap:2px}
+.cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.cat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;display:grid;gap:10px;align-content:start}
+.cat.new{border-color:var(--accent)}
+.cat ul{margin:0;padding:0;display:grid;gap:7px}
+.cat li{list-style:none;display:flex;justify-content:space-between;gap:10px;font-size:14px;align-items:baseline}
+.cat li em{font-style:normal;font-size:12px;color:var(--muted);white-space:nowrap}
+.acd{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;display:grid;gap:12px}
+.svc div.alt::before{background:var(--accent-soft)}
+.field{display:grid;gap:3px}
+.field label{font-size:10.5px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.input{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:7px 9px}
+.check{display:flex;align-items:center;gap:7px;font-weight:500}
+.check::before{content:"✓";display:grid;place-items:center;width:15px;height:15px;border-radius:4px;background:var(--brand);color:var(--brand-ink);font-size:10px;font-weight:700}
+.toggle{display:flex;justify-content:space-between;align-items:center}
+.toggle i{width:28px;height:16px;border-radius:99px;background:var(--brand);position:relative}
+.toggle i::after{content:"";position:absolute;right:2px;top:2px;width:12px;height:12px;border-radius:50%;background:var(--brand-ink)}
+.ph{background:repeating-linear-gradient(135deg,var(--line) 0 6px,transparent 6px 12px);border-radius:8px}
+.thumbs{display:flex;gap:5px}
+.thumbs .ph{width:44px;height:44px}
+.thumbs .add{width:44px;height:44px;border:1.5px dashed var(--muted);border-radius:8px;display:grid;place-items:center;color:var(--muted);font-size:18px}
+.price{font-weight:700;font-variant-numeric:tabular-nums}
+.num{font-variant-numeric:tabular-nums}
+.steps{display:flex;gap:4px}
+.steps i{flex:1;height:4px;border-radius:2px;background:var(--line)}
+.steps i.on{background:var(--brand)}
+.tl{display:grid;gap:0;padding-left:4px}
+.tl div{display:grid;grid-template-columns:16px 1fr;gap:8px;position:relative;padding-bottom:10px}
+.tl div::before{content:"";width:12px;height:12px;border-radius:50%;background:var(--ok);margin-top:2px;z-index:1}
+.tl div::after{content:"";position:absolute;left:5px;top:14px;bottom:0;width:2px;background:var(--line)}
+.tl div:last-child::after{display:none}
+.tl div.cur::before{background:var(--surface);border:3px solid var(--accent);width:12px;height:12px}
+.tl div.next::before{background:var(--surface);border:2px solid var(--line)}
+.tl div.next{color:var(--muted)}
+.tl b{font-weight:600}
+.agentbox{display:flex;align-items:center;gap:8px}
+.av{width:30px;height:30px;border-radius:50%;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;font-weight:700;font-size:11px;flex:none}
+.bubble{max-width:80%;padding:7px 10px;border-radius:12px;background:var(--surface);border:1px solid var(--line)}
+.bubble.me{margin-left:auto;background:var(--brand);color:var(--brand-ink);border-color:transparent}
+.sum div{display:flex;justify-content:space-between;font-variant-numeric:tabular-nums}
+.sum .tot{font-weight:700;border-top:1px solid var(--line);padding-top:6px}
+.sum .hl{color:var(--accent);font-weight:700}
+.opt{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:9px}
+.opt::before{content:"";width:14px;height:14px;border-radius:50%;border:2px solid var(--muted);flex:none}
+.opt.on{border-color:var(--brand)}
+.opt.on::before{border:4px solid var(--brand)}
+.note{font-size:10.5px;color:var(--warn);background:var(--accent-soft);border-radius:8px;padding:6px 8px}
+.strip{border-left:3px solid var(--brand);padding-left:8px}
+.strip.r{border-color:var(--late)}
+.strip.o{border-color:var(--accent)}
+.gauge{height:8px;border-radius:4px;background:var(--line);overflow:hidden}
+.gauge i{display:block;height:100%;width:62%;background:var(--brand)}
+
+/* Back-office */
+.scroll-x{overflow-x:auto;border-radius:14px}
+.browser{min-width:820px;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--screen);font-size:13px}
+.bbar{display:flex;align-items:center;gap:6px;padding:9px 12px;background:var(--surface);border-bottom:1px solid var(--line)}
+.bbar i{width:10px;height:10px;border-radius:50%;background:var(--line)}
+.bbar .url{margin-left:12px;font-family:var(--f-mono);font-size:11.5px;color:var(--muted);background:var(--bg);padding:3px 10px;border-radius:6px}
+.bo{display:grid;grid-template-columns:190px 1fr}
+.side{background:var(--surface);border-right:1px solid var(--line);padding:14px 10px;display:grid;align-content:start;gap:2px}
+.side .logo{font-family:var(--f-display);font-weight:700;font-size:16px;padding:0 8px 12px}
+.side span{padding:7px 10px;border-radius:8px;color:var(--muted)}
+.side span.on{background:var(--brand-soft);color:var(--brand);font-weight:600}
+.main{padding:18px;display:grid;gap:14px;align-content:start}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px;display:grid;gap:2px}
+.kpi b{font-family:var(--f-display);font-size:24px;font-variant-numeric:tabular-nums}
+.kpi.r b{color:var(--late)}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600;padding:8px 10px;border-bottom:1px solid var(--line)}
+td{padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:middle}
+.tbl{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.tbl .head{display:flex;justify-content:space-between;align-items:center;padding:12px}
+
+/* Architecture */
+.arch{display:grid;gap:12px}
+.layer{display:grid;grid-template-columns:150px 1fr;gap:14px;align-items:stretch}
+.layer > .lbl{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding-top:12px}
+.boxes{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px}
+.box{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:grid;gap:4px;align-content:start}
+.box b{font-size:15px}
+.box .tech{font-family:var(--f-mono);font-size:12px;color:var(--brand)}
+.box small{color:var(--muted);font-size:13px}
+.box.core{background:var(--brand);color:var(--brand-ink);border-color:transparent}
+.box.core .tech,.box.core small{color:var(--brand-ink);opacity:.85}
+.box.tbd{border-style:dashed}
+.box.tbd .tech{color:var(--accent)}
+.arrow{text-align:center;color:var(--muted);font-size:13px;font-family:var(--f-mono)}
+.mods{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.mods span{font-family:var(--f-mono);font-size:11.5px;padding:2px 8px;border-radius:6px;background:rgba(255,255,255,.16)}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:18px}
+.two > *{min-width:0}
+pre.tree{margin:0;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;overflow-x:auto;font-family:var(--f-mono);font-size:13px;line-height:1.6}
+.stack{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow-x:auto}
+.stack td:first-child{color:var(--muted);white-space:nowrap}
+.stack td:last-child{font-weight:500}
+.diagram{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px;overflow-x:auto}
+.statuses{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:13px}
+.statuses span{padding:5px 11px;border-radius:99px;background:var(--surface);border:1px solid var(--line)}
+.statuses span.pay{background:var(--accent-soft);color:var(--accent);border-color:transparent;font-weight:600}
+.statuses span.end{background:var(--brand-soft);color:var(--brand);border-color:transparent;font-weight:600}
+.statuses em{font-style:normal;color:var(--muted)}
+.open{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
+.open div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px;display:grid;gap:4px}
+.open div b{font-size:14px}
+.open div span{font-size:13px;color:var(--muted)}
+.disclaimer{font-size:13px;color:var(--muted)}
+.ents{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;align-items:start}
+.ent-group{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px;display:grid;gap:8px}
+.ent-group h3{font-size:15px;margin:0 0 2px}
+.ent{display:grid;gap:2px;padding-top:8px;border-top:1px solid var(--line)}
+.ent b{font-family:var(--f-mono);font-size:12.5px;color:var(--brand);font-weight:500}
+.ent span{font-size:13px;color:var(--muted)}
+.ent i{font-style:normal;color:var(--accent);font-weight:600}
+
+@media (max-width:640px){
+  .layer{grid-template-columns:1fr;gap:6px}
+  .layer > .lbl{padding-top:0}
+}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+html{scroll-behavior:smooth}
+</style>
+
+<div class="wrap">
+<header class="top">
+  <span class="eyebrow">GSF Service · Conciergerie en Côte d'Ivoire</span>
+  <h1>Maquettes et architecture</h1>
+  <p class="muted">Application mobile unique (clients, agents et coordinateur), back-office web et API. Document de travail à valider avant le développement.</p>
+  <div class="meta">
+    <span><b>Version</b> 0.9</span>
+    <span><b>Date</b> 24 novembre 2026</span>
+    <span><b>Pays</b> Côte d'Ivoire · FCFA</span>
+    <span class="status-pill">À valider</span>
+  </div>
+</header>
+
+<nav class="toc" aria-label="Sommaire">
+  <a href="#parcours">Parcours</a>
+  <a href="#services">Services</a>
+  <a href="#client">App · Client</a>
+  <a href="#agent">App · Agent et coordinateur</a>
+  <a href="#backoffice">Back-office</a>
+  <a href="#tarifs">Tarifs</a>
+  <a href="#architecture">Architecture</a>
+  <a href="#donnees">Données</a>
+  <a href="#statuts">Statuts</a>
+  <a href="#ouvert">Points ouverts</a>
+</nav>
+
+<!-- PARCOURS -->
+<section id="parcours">
+  <div class="sec-head">
+    <span class="eyebrow">Le principe</span>
+    <h2>Le client exprime un besoin, GSF trouve et s'occupe de tout</h2>
+    <p class="muted">Ce parcours vaut pour tous les services : séjour, location de véhicule, démarches administratives, foncier, et les services ajoutés plus tard. Les services à prix fixe sautent les étapes Recherche et Propositions, et se paient en totalité à la commande. Chaque demande a un seul agent, pour tous ses services. Il sert aussi bien la diaspora que les résidents qui manquent de temps.</p>
+  </div>
+  <ol class="flow" style="padding:0;margin:0">
+    <li><b>Demande</b><span>Le client choisit un ou plusieurs services et remplit ses critères</span></li>
+    <li class="who-gsf"><b>Prise en charge</b><span>Le coordinateur GSF affecte la demande à un agent</span></li>
+    <li class="who-gsf"><b>Recherche</b><span>L'agent cherche la solution : un bien d'un partenaire, ou un devis pour une démarche ou un dossier foncier</span></li>
+    <li class="who-gsf"><b>Propositions</b><span>Une ou plusieurs options, avec prix et date d'expiration</span></li>
+    <li><b>Choix et acompte</b><span>Le client accepte une option et paie l'acompte (30 % par défaut)</span></li>
+    <li class="who-gsf"><b>Préparation</b><span>Étapes mises à jour avec photos, visibles par le client</span></li>
+    <li><b>Arrivée et solde</b><span>Remise des clés ou du véhicule, solde payé sur place</span></li>
+    <li><b>Clôture</b><span>Fin de la prestation et avis du client</span></li>
+  </ol>
+  <div class="legend"><span><i></i>Action du client</span><span><i class="g"></i>Action de GSF</span></div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="sec-head">
+    <span class="eyebrow">Catalogue</span>
+    <h2>Les services au lancement</h2>
+    <p class="muted">Chaque service se configure dans le back-office (formulaire, étapes de suivi, tarifs). GSF pourra en ajouter d'autres sans développement. À droite de chaque service, son mode de tarification.</p>
+  </div>
+  <div class="cats">
+    <div class="cat">
+      <h3>Séjour et mobilité</h3>
+      <ul>
+        <li>Résidence meublée<em>À partir de</em></li>
+        <li>Location de véhicule<em>À partir de</em></li>
+        <li>Accueil à l'aéroport<em>Prix fixe</em></li>
+      </ul>
+    </div>
+    <div class="cat">
+      <h3>Démarches administratives</h3>
+      <ul>
+        <li>Extrait d'acte de naissance<em>Prix fixe</em></li>
+        <li>Casier judiciaire<em>Prix fixe</em></li>
+        <li>Certificat de nationalité<em>Prix fixe</em></li>
+        <li>Légalisation de documents<em>Prix fixe</em></li>
+      </ul>
+    </div>
+    <div class="cat new">
+      <div class="row"><h3>Foncier</h3><span class="chip o">Nouveau</span></div>
+      <ul>
+        <li>Visite de terrain<em>Prix fixe par zone</em></li>
+        <li>Vérification foncière<em>Prix fixe</em></li>
+        <li>Dossier ACD<em>Sur devis</em></li>
+        <li>Bornage et plan topographique<em>Sur devis</em></li>
+        <li>Entretien et gardiennage<em>Par mois</em></li>
+        <li>Suivi de construction<em>Par mois</em></li>
+        <li>Paiement de l'impôt foncier<em>Fixe + impôt</em></li>
+      </ul>
+    </div>
+    <div class="cat">
+      <h3>Autre demande</h3>
+      <ul><li>Demande libre, décrite par le client<em>Sur devis</em></li></ul>
+    </div>
+  </div>
+  <div class="acd">
+    <div class="row" style="flex-wrap:wrap"><h3>Exemple d'étapes de suivi : dossier ACD</h3><span class="chip n">Indicatif, à valider avec GSF</span></div>
+    <div class="statuses">
+      <span>Collecte des pièces</span><em>→</em><span>Constitution du dossier</span><em>→</em><span>Dépôt de la demande au ministère</span><em>→</em><span>Suivi de l'instruction</span><em>→</em><span>Signature de l'ACD</span><em>→</em><span class="end">Retrait et remise au client</span>
+    </div>
+    <p class="muted" style="font-size:14px">Tout le foncier est géré par le cabinet de géomètres de GSF. Pour l'ACD, le cabinet constitue le dossier de demande, le dépose au ministère puis en assure le suivi. Aucun partenaire externe n'intervient. Le client enregistre ses terrains une seule fois dans « Mes biens ». Chaque demande foncière s'y rattache, avec ses documents.</p>
+  </div>
+</section>
+
+<!-- CLIENT -->
+<section id="client">
+  <div class="sec-head">
+    <div class="group-title"><h2>Application mobile, côté client</h2><span class="tag">Rôle Client</span></div>
+    <p class="muted">Maquettes basse fidélité. Les noms, montants et dates sont des exemples fictifs.</p>
+  </div>
+  <div class="phones">
+
+    <!-- C1 Accueil -->
+    <figure>
+      <div class="phone">
+        <div class="sb"><span>9:41</span><span>●●● 4G</span></div>
+        <div class="appbar"><span class="t">Bonjour Aïcha</span></div>
+        <div class="scr">
+          <div class="card strip o">
+            <div class="row"><b>Séjour à Abidjan</b><span class="chip o">2 propositions</span></div>
+            <span class="small">18 → 30 déc. 2026 · Résidence + véhicule</span>
+            <span class="btn sm">Voir les propositions</span>
+          </div>
+          <b style="font-size:13px">Nos services</b>
+          <div class="svc">
+            <div>Résidence meublée<span class="p">dès 35 000 F / nuit</span></div>
+            <div>Location de véhicule<span class="p">dès 25 000 F / jour</span></div>
+            <div class="alt">Accueil à l'aéroport<span class="p">dès 25 000 F</span></div>
+            <div class="alt">Courses administratives<span class="p">dès 10 000 F</span></div>
+            <div>Foncier et terrains<span class="p">dès 30 000 F</span></div>
+            <div class="alt">Autre demande<span class="p">Sur devis</span></div>
+          </div>
+        </div>
+        <div class="tabs"><span class="on">Accueil</span><span>Demandes</span><span>Messages</span><span>Profil</span></div>
+      </div>
+      <figcaption><b>1. Accueil</b>Demandes en cours en haut, puis le catalogue avec un prix indicatif pour chaque service</figcaption>
+    </figure>
+
+    <!-- C2 Fiche service : accueil aéroport -->
+    <figure>
+      <div class="phone">
+        <div class="sb"><span>9:41</span><span>●●● 4G</span></div>
+        <div class="appbar"><span class="back">‹</span><span class="t">Accueil à l'aéroport</span></div>
+        <div class="scr">
+          <div class="ph" style="height:56px;flex:none"></div>
+          <span class="small">Un agent GSF vous attend à la sortie de l'aéroport Félix-Houphouët-Boigny avec une pancarte à votre nom, puis vous conduit à votre logement.</span>
+          <div class="card plist">
+            <b>Tarifs · aéroport → Abidjan</b>
+            <div><span>Berline · 1 à 3 pers.</span><b>25 000 F</b></div>
+            <div><span>SUV · 1 à 4 pers.</span><b>35 000 F</b></div>
+            <div><span>Minibus · 5 à 8 pers.</span><b>50 000 F</b></div>
+            <span class="small">Hors frais de service GSF, affichés à part</span>
+          </div>
+          <div class="card plist">
+            <b>Options</b>
+            <div><span>Arrivée entre 22 h et 6 h</span><b>+ 10 000 F</b></div>
+            <div><span>Puce téléphonique chargée</span><b>+ 5 000 F</b></div>
+            <div><span>Destination hors Abidjan</span><b>Sur devis</b></div>
+          </div>
+          <div class="chips"><span class="chip">Suivi du vol</span><span class="chip">Pancarte nominative</span><span class="chip">1 h d'attente incluse</span></div>
+          <span class="btn">Réserver · dès 25 000 FCFA</span>
+        </div>
+      </div>
+      <figcaption><b>2. Fiche service et tarifs</b>Le client voit la grille de prix, les options et ce qui est inclus avant de commander</figcaption>
+    </figure>
+
+    <!-- C2 Nouvelle demande -->
+    <figure>
+      <div class="phone">
+        <div class="sb"><span>9:41</span><span>●●● 4G</span></div>
+        <div class="appbar"><span class="back">‹</span><span class="t">Nouvelle demande</span></div>
+        <div class="scr">
+          <div class="steps"><i class="on"></i><i class="on"></i><i></i></div>
+          <div class="field"><label>Dates</label><div class="input num">18 déc. → 30 déc. 2026</div></div>
+          <div class="field"><label>Lieu souhaité</label><div class="input">Abidjan · Cocody ou Riviera</div></div>
+          <div class="field"><label>Voyageurs</label><div class="input">2 adultes, 2 enfants</div></div>
+          <div class="field"><label>Services</label>
+            <span class="check">Résidence meublée</span>
+            <span class="check">Véhicule de location</span>
+            <span class="check">Accueil à l'aéroport · vol AF702, 18 déc. 21:35</span>
+          </div>
+          <div class="field"><label>Options résidence</label>
+            <div class="chips"><span class="chip">3 chambres</span><span class="chip">Climatisation</span><span class="chip">Groupe électrogène</span><span class="chip n">Piscine</span></div>
+          </div>
+          <div class="field"><label>Budget par nuit</label><div class="input num">40 000 – 60 000 FCFA</div></div>
+          <span class="btn">Continuer</span>
+        </div>
+      </div>
+      <figcaption><b>3. Nouvelle demande</b>Plusieurs services dans une seule demande, avec un formulaire propre à chaque service</figcaption>
+    </figure>
+
+    <!-- C3 Propositions -->
+    <figure>
+      <div class="phone">
+        <div class="sb"><span>9:41</span><span>●●● 4G</span></div>
+        <div class="appbar"><span class="back">‹</span><span class="t">Propositions</span></div>
+        <div class="scr">
+          <div class="row"><b>Résidence</b><span class="small">Expirent le 02/12</span></div>
+          <div class="card">
+            <div class="ph" style="height:70px"></div>
+            <div class="row"><b>Villa 3 ch. · Riviera 3</b><span class="chip">Option A</span></div>
+            <span class="small">Clim, groupe électrogène, gardien</span>
+            <div class="row"><span class="price">55 000 FCFA / nuit</span><span class="small num">12 nuits</span></div>
+            <div class="btns"><span class="btn ghost sm">Détails</span><span class="btn sm">Choisir</span></div>
+          </div>
+          <div class="card">
+            <div class="row"><b>Appart. 3 ch. · Angré</b><span class="chip n">Option B</span></div>
+            <div class="row"><span class="price">45 000 FCFA / nuit</span><span class="btn ghost sm" style="padding:4px 10px">Détails</span></div>
+          </div>
+          <div class="row"><b>Véhicule</b></div>
+          <div class="card">
+            <div class="row"><b>Toyota RAV4 + chauffeur</b><span class="chip">Option A</span></div>
+            <div class="row"><span class="price">35 000 FCFA / jour</span><span class="small">Remise à l'aéroport</span></div>
+          </div>
+          <span class="small" style="text-align:center">Aucune option ne convient ? <b style="color:var(--brand)">Demander d'autres propositions</b></span>
+        </div>
+      </div>
+      <figcaption><b>4. Propositions</b>Pour la résidence et le véhicule, le client compare et choisit. L'accueil à l'aéroport, à prix fixe, n'a pas besoin de proposition</figcaption>
+    </figure>
+
+    <!-- C4 Paiement -->
+    <figure>
+      <div class="phone">
+        <div class="sb"><span>9:41</span><span>●●● 4G</span></div>
+        <div class="appbar"><span class="back">‹</span><span class="t">Paiement de l'acompte</span></div>
+        <div class="scr">
+          <div class="card sum">
+            <div><span>Villa Riviera 3 · 12 nuits</span><span>660 000</span></div>
+            <div><span>RAV4 + chauffeur · 12 j</span><span>420 000</span></div>
+            <div><span>Accueil aéroport · SUV</span><span>35 000</span></div>
+            <div><span>Frais de service GSF</span><span>75 000</span></div>
+            <div class="tot"><span>Total FCFA</span><span>1 190 000</span></div>
+            <div class="small"><span>Soit environ</span><span>1 815 €</span></div>
+          </div>
+          <div class="card sum">
+            <div><span>Acompte résidence + véhicule (30 %)</span><span>324 000</span></div>
+            <div><span>Accueil aéroport (prix fixe, en totalité)</span><span>35 000</span></div>
+            <div><span>Frais de service GSF</span><span>75 000</span></div>
+            <div class="hl"><span>À payer maintenant</span><span>434 000</span></div>
+            <div><span>Solde à l'arrivée</span><span>756 000</span></div>
+          </div>
+          <div class="field"><label>Moyen de paiement</label>
+            <div class="opt on">Carte bancaire</div>
+            <div class="opt">Mobile Money</div>
+          </div>
+          <div class="note">Prestataire de paiement à définir.</div>
+          <span class="btn">Payer 434 000 FCFA</span>
+        </div>
+      </div>
+      <figcaption><b>5. Paiement</b>Frais GSF sur une ligne à part, payés avec l'acompte. Les services à prix fixe sont payés en totalité. Le solde à l'arrivée ne couvre que la résidence et le véhicule</figcaption>
+    </figure>
+
+    <!-- C5 Suivi -->
+    <figure>
+      <div class="phone">
+        <div class="sb"><span>9:41</span><span>●●● 4G</span></div>
+        <div class="appbar"><span class="back">‹</span><span class="t">Séjour à Abidjan</span></div>
+        <div class="scr">
+          <div class="card">
+            <div class="agentbox"><span class="av">YK</span><div style="flex:1"><b>Yao K.</b><div class="small">Votre agent GSF</div></div><span class="btn ghost sm" style="padding:4px 10px">Message</span></div>
+          </div>
+          <span class="small mono">GSF-2026-0142</span>
+          <div class="tl">
+            <div><span></span><span><b>Demande envoyée</b><br><span class="small">24 nov.</span></span></div>
+            <div><span></span><span><b>Prise en charge par Yao</b><br><span class="small">24 nov.</span></span></div>
+            <div><span></span><span><b>Proposition acceptée</b><br><span class="small">27 nov.</span></span></div>
+            <div><span></span><span><b>Acompte et frais payés · 434 000 FCFA</b><br><span class="small">27 nov.</span></span></div>
+            <div class="cur"><span></span><span><b>Arrivée en préparation</b><br><span class="small">Ménage et état des lieux prévus le 17 déc.</span>
+              <span class="thumbs" style="margin-top:5px"><span class="ph"></span><span class="ph"></span><span class="ph"></span></span></span></div>
+            <div class="next"><span></span><span>Accueil à l'aéroport · 18 déc.</span></div>
+            <div class="next"><span></span><span>Séjour en cours</span></div>
+            <div class="next"><span></span><span>Clôture et avis</span></div>
+          </div>
+        </div>
+        <div class="tabs"><span>Accueil</span><span class="on">Demandes</span><span>Messages</span><span>Profil</span></div>
+      </div>
+      <figcaption><b>6. Suivi de la demande</b>Chaque étape est datée, avec des photos comme preuves</figcaption>
+    </figure>
+
+    <!-- C6 Démarche administrative -->
+    <figure>
+      <div class="phone">
+        <div class="sb"><span>9:41</span><span>●●● 4G</span></div>
+        <div class="appbar"><span class="back">‹</span><span class="t">Courses administratives</span></div>
+        <div class="scr">
+          <div class="field"><label>Démarche</label><div class="input">Extrait d'acte de naissance</div></div>
+          <div class="field"><label>Commune</label><div class="input">Yopougon</div></div>
+          <div class="field"><label>Nom sur l'acte</label><div class="input">KONÉ Aïcha Mariam</div></div>
+          <div class="field"><label>Pièces à fournir</label>
+            <div class="card" style="padding:8px"><div class="row"><span>Pièce d'identité</span><span class="chip">Ajoutée</span></div></div>
+            <div class="card" style="padding:8px"><div class="row"><span>Procuration GSF</span><span class="chip o">À signer</span></div></div>
+          </div>
+          <div class="field"><label>Réception du document</label>
+            <div class="opt on">Remise à un proche à Abidjan</div>
+            <div class="opt">Envoi par coursier à l'étranger</div>
+          </div>
+          <span class="btn">Envoyer ma demande</span>
+        </div>
+      </div>
+      <figcaption><b>7. Démarche administrative</b>Documents requis et procuration signée dans l'app</figcaption>
+    </figure>
+
+    <!-- C8 Foncier -->
+    <figure>
+      <div class="phone">
+        <div class="sb"><span>9:41</span><span>●●● 4G</span></div>
+        <div class="appbar"><span class="back">‹</span><span class="t">Foncier et terrains</span></div>
+        <div class="scr">
+          <span class="small">Pour votre terrain en Côte d'Ivoire, même à distance.</span>
+          <div class="svc-list">
+            <div class="card"><div class="row"><b>Visite de terrain</b><span class="price">dès 30 000 F</span></div><span class="small">Photos, vidéo, position GPS, rapport</span></div>
+            <div class="card"><div class="row"><b>Vérification foncière</b><span class="price">dès 75 000 F</span></div><span class="small">Authenticité des documents, situation du terrain</span></div>
+            <div class="card"><div class="row"><b>Dossier ACD</b><span class="price">Sur devis</span></div><span class="small">Constitution et suivi jusqu'à la remise</span></div>
+            <div class="card"><div class="row"><b>Bornage et plan topo</b><span class="price">Sur devis</span></div><span class="small">Par le cabinet de géomètres de GSF</span></div>
+            <div class="card"><div class="row"><b>Entretien du terrain</b><span class="price">25 000 F / mois</span></div><span class="small">Débroussaillage, gardiennage</span></div>
+            <div class="card"><div class="row"><b>Suivi de construction</b><span class="price">40 000 F / mois</span></div><span class="small">Photos et vidéo chaque semaine</span></div>
+          </div>
+        </div>
+        <div class="tabs"><span class="on">Accueil</span><span>Demandes</span><span>Messages</span><span>Profil</span></div>
+      </div>
+      <figcaption><b>8. Catégorie Foncier</b>Les services fonciers, chacun avec son prix ou la mention « Sur devis »</figcaption>
+    </figure>
+
+    <!-- C9 Rapport de visite -->
+    <figure>
+      <div class="phone">
+        <div class="sb"><span>9:41</span><span>●●● 4G</span></div>
+        <div class="appbar"><span class="back">‹</span><span class="t">Rapport de visite</span></div>
+        <div class="scr">
+          <div class="row"><span class="small mono">GSF-2026-0161</span><span class="chip">Terminée</span></div>
+          <span class="small">Rattaché à : <b style="color:var(--ink)">Mon terrain de Bingerville · lot 112</b></span>
+          <div class="ph" style="height:78px;flex:none;display:grid;place-items:center;color:var(--muted);font-weight:600">▶ Vidéo · 2 min</div>
+          <div class="thumbs"><span class="ph"></span><span class="ph"></span><span class="ph"></span><span class="ph"></span></div>
+          <div class="card plist">
+            <div><span>Position GPS</span><b class="num">5.3561 N · 3.8912 O</b></div>
+            <div><span>Bornes retrouvées</span><b>4 sur 4</b></div>
+            <div><span>Occupation</span><b>Terrain libre</b></div>
+            <div><span>Accès</span><b>Piste, 300 m du goudron</b></div>
+          </div>
+          <div class="card">
+            <b>Observations de l'agent</b>
+            <span class="small">Terrain conforme au plan fourni. Un voisin a commencé une clôture en limite nord, à vérifier lors d'un bornage.</span>
+          </div>
+          <div class="btns"><span class="btn ghost sm">Rapport PDF</span><span class="btn sm">Demander un bornage</span></div>
+        </div>
+      </div>
+      <figcaption><b>9. Rapport de visite</b>Photos, vidéo, GPS et constats, rattachés au terrain du client. Le rapport peut déboucher sur un autre service</figcaption>
+    </figure>
+
+    <!-- C7 Messagerie -->
+    <figure>
+      <div class="phone">
+        <div class="sb"><span>9:41</span><span>●●● 4G</span></div>
+        <div class="appbar"><span class="back">‹</span><span class="av" style="width:26px;height:26px">YK</span><span class="t">Yao K.</span></div>
+        <div class="scr" style="justify-content:flex-end">
+          <span class="small" style="text-align:center">Séjour à Abidjan · GSF-2026-0142</span>
+          <div class="bubble">Bonjour Mme Koné, j'ai visité la villa ce matin. Voici les photos de la chambre principale.</div>
+          <div class="thumbs"><span class="ph"></span><span class="ph"></span></div>
+          <div class="bubble me">Parfait, merci. Est-ce qu'il y a un lit bébé ?</div>
+          <div class="bubble">Oui, le propriétaire en installe un avant votre arrivée.</div>
+          <div class="input row"><span class="muted">Écrire un message…</span><span class="chip">Envoyer</span></div>
+        </div>
+        <div class="tabs"><span>Accueil</span><span>Demandes</span><span class="on">Messages</span><span>Profil</span></div>
+      </div>
+      <figcaption><b>10. Messagerie</b>Un fil par demande, avec photos et notes vocales</figcaption>
+    </figure>
+
+  </div>
+</section>
+
+<!-- AGENT -->
+<section id="agent">
+  <div class="sec-head">
+    <div class="group-title"><h2>Application mobile, côté agent</h2><span class="tag agent">Rôle Agent</span></div>
+    <p class="muted">La même application : l'interface change selon le rôle du compte connecté. Les comptes agents sont créés par l'admin. Les géomètres du cabinet GSF sont des agents comme les autres : ils reçoivent les demandes foncières que le coordinateur leur affecte.</p>
+  </div>
+  <div class="phones">
+
+    <!-- A1 Tâches -->
+    <figure>
+      <div class="phone">
+        <div class="sb"><span>9:41</span><span>●●● 4G</span></div>
+        <div class="appbar"><span class="t">Mes tâches</span></div>
+        <div class="scr">
+          <div class="chips"><span class="chip">À traiter · 3</span><span class="chip n">En cours · 7</span><span class="chip r">En retard · 1</span></div>
+          <div class="card strip r">
+            <div class="row"><b>Acte de naissance</b><span class="chip r">Retard</span></div>
+            <span class="small">GSF-2026-0151 · Mairie de Yopougon</span>
+            <span class="small">Délai cible dépassé de 1 jour</span>
+          </div>
+          <div class="card strip o">
+            <div class="row"><b>Accueil à l'aéroport</b><span class="chip o">Demain 06:40</span></div>
+            <span class="small">GSF-2026-0153 · Aéroport FHB · vol AT555 · SUV</span>
+          </div>
+          <div class="card strip">
+            <div class="row"><b>Séjour à Abidjan</b><span class="chip">Préparation</span></div>
+            <span class="small">GSF-2026-0142 · A. Koné · arrivée le 18 déc.</span>
+          </div>
+          <div class="card strip">
+            <div class="row"><b>Nouvelle demande</b><span class="chip n">Affectée</span></div>
+            <span class="small">GSF-2026-0158 · Résidence · Assinie · 4 nuits</span>
+            <span class="small">Affectée par le coordinateur ce matin</span>
+          </div>
+        </div>
+        <div class="tabs"><span class="on">Tâches</span><span>Messages</span><span>Partenaires</span><span>Profil</span></div>
+      </div>
+      <figcaption><b>1. Mes tâches</b>Tri par urgence : retards, rendez-vous du jour, nouvelles demandes</figcaption>
+    </figure>
+
+    <!-- A2 Proposition -->
+    <figure>
+      <div class="phone">
+        <div class="sb"><span>9:41</span><span>●●● 4G</span></div>
+        <div class="appbar"><span class="back">‹</span><span class="t">Nouvelle proposition</span></div>
+        <div class="scr">
+          <span class="small mono">GSF-2026-0142 · Résidence</span>
+          <div class="field"><label>Bien du partenaire</label><div class="input row"><span>Villa Riviera 3 · M. Bamba</span><span class="muted">▾</span></div></div>
+          <div class="thumbs"><span class="ph"></span><span class="ph"></span><span class="ph"></span><span class="add">+</span></div>
+          <div class="btns">
+            <div class="field"><label>Prix / nuit</label><div class="input num">55 000</div></div>
+            <div class="field"><label>Nuits</label><div class="input num">12</div></div>
+          </div>
+          <div class="field"><label>Frais de service GSF · selon le volume</label><div class="input num">40 000</div></div>
+          <div class="card sum">
+            <div><span>Résidence · 12 nuits</span><span>660 000</span></div>
+            <div><span>Frais de service GSF</span><span>40 000</span></div>
+            <div class="tot"><span>Total</span><span>700 000 FCFA</span></div>
+            <div><span>Acompte · 30 % <span class="small">(modifiable)</span></span><span>198 000</span></div>
+          </div>
+          <div class="field"><label>Valable jusqu'au</label><div class="input num">02/12/2026</div></div>
+          <span class="btn">Envoyer au client</span>
+        </div>
+      </div>
+      <figcaption><b>2. Créer une proposition</b>Choix d'un bien du réseau, frais GSF fixés selon le volume de la prestation, acompte ajustable</figcaption>
+    </figure>
+
+    <!-- A3 Mise à jour étape -->
+    <figure>
+      <div class="phone">
+        <div class="sb"><span>9:41</span><span>●●● 4G</span></div>
+        <div class="appbar"><span class="back">‹</span><span class="t">Mettre à jour</span></div>
+        <div class="scr">
+          <span class="small mono">GSF-2026-0151 · Acte de naissance</span>
+          <div class="field"><label>Étape actuelle</label><div class="input">Déposé à la mairie</div></div>
+          <div class="field"><label>Nouvelle étape</label><div class="input row"><span>En traitement</span><span class="muted">▾</span></div></div>
+          <div class="field"><label>Commentaire</label><div class="input" style="min-height:58px">Dossier enregistré, retrait prévu jeudi selon l'agent de l'état civil.</div></div>
+          <div class="field"><label>Preuves</label><div class="thumbs"><span class="ph"></span><span class="add">+</span></div></div>
+          <div class="toggle"><span>Visible par le client</span><i></i></div>
+          <span class="small">Hors réseau : la mise à jour partira dès le retour de la connexion.</span>
+          <span class="btn">Publier la mise à jour</span>
+        </div>
+      </div>
+      <figcaption><b>3. Mise à jour d'étape</b>Photo du récépissé, commentaire, notification au client</figcaption>
+    </figure>
+
+    <!-- A4 Remise & solde -->
+    <figure>
+      <div class="phone">
+        <div class="sb"><span>9:41</span><span>●●● 4G</span></div>
+        <div class="appbar"><span class="back">‹</span><span class="t">Remise du véhicule</span></div>
+        <div class="scr">
+          <span class="small mono">GSF-2026-0160 · Toyota RAV4 · 5 jours</span>
+          <div class="field"><label>Photos (4 côtés + intérieur)</label><div class="thumbs"><span class="ph"></span><span class="ph"></span><span class="ph"></span><span class="ph"></span><span class="add">+</span></div></div>
+          <div class="field"><label>Kilométrage</label><div class="input num">48 210 km</div></div>
+          <div class="field"><label>Carburant</label><div class="gauge"><i></i></div></div>
+          <div class="card sum">
+            <div class="hl"><span>Solde à encaisser</span><span>122 500 FCFA</span></div>
+          </div>
+          <div class="chips"><span class="chip">Espèces</span><span class="chip n">Mobile Money</span><span class="chip n">Carte</span></div>
+          <span class="btn">Valider la remise et le solde</span>
+          <span class="small" style="text-align:center">Le client signe à l'écran et reçoit son reçu</span>
+        </div>
+      </div>
+      <figcaption><b>4. Remise et solde</b>État des lieux avec photos, encaissement du solde sur place</figcaption>
+    </figure>
+
+    <!-- A5 Visite de terrain -->
+    <figure>
+      <div class="phone">
+        <div class="sb"><span>9:41</span><span>●●● 4G</span></div>
+        <div class="appbar"><span class="back">‹</span><span class="t">Visite de terrain</span></div>
+        <div class="scr">
+          <span class="small mono">GSF-2026-0161 · Bingerville · lot 112</span>
+          <div class="card">
+            <div class="row"><b>Position GPS</b><span class="chip">Capturée</span></div>
+            <span class="small num">5.3561 N · 3.8912 O · précision 4 m</span>
+          </div>
+          <div class="field"><label>Contrôles</label>
+            <span class="check">Photos des 4 bornes (4/4)</span>
+            <span class="check">Vue d'ensemble et vidéo</span>
+            <span class="check">Accès et voisinage</span>
+            <span class="check todo">Photo du panneau ou du lot</span>
+          </div>
+          <div class="field"><label>Terrain occupé ?</label><div class="chips"><span class="chip n">Oui</span><span class="chip">Non</span></div></div>
+          <div class="field"><label>Construction voisine en limite ?</label><div class="chips"><span class="chip">Oui</span><span class="chip n">Non</span></div></div>
+          <div class="field"><label>Observations</label><div class="input" style="min-height:44px">Clôture voisine commencée en limite nord.</div></div>
+          <span class="btn">Envoyer le rapport au client</span>
+        </div>
+      </div>
+      <figcaption><b>5. Visite de terrain</b>Liste de contrôle guidée : GPS, photos des bornes, questions. Le rapport se génère tout seul</figcaption>
+    </figure>
+
+  </div>
+
+  <div class="sec-head" style="margin-top:28px">
+    <div class="group-title"><h2>Application mobile, côté coordinateur</h2><span class="tag">Rôle Coordinateur</span></div>
+    <p class="muted">Toutes les demandes arrivent chez le coordinateur. Il les affecte aux agents depuis l'app, ou depuis le back-office quand il est au bureau. L'agent choisi reçoit une notification.</p>
+  </div>
+  <div class="phones">
+
+    <!-- C1 Demandes à affecter -->
+    <figure>
+      <div class="phone">
+        <div class="sb"><span>9:41</span><span>●●● 4G</span></div>
+        <div class="appbar"><span class="t">À affecter</span></div>
+        <div class="scr">
+          <div class="chips"><span class="chip">À affecter · 4</span><span class="chip n">Affectées · 23</span><span class="chip r">En retard · 1</span></div>
+          <div class="card strip o">
+            <div class="row"><b>Accueil à l'aéroport</b><span class="chip o">Demain 06:40</span></div>
+            <span class="small">GSF-2026-0163 · Aéroport FHB · vol AF702 · berline</span>
+            <span class="small">Reçue il y a 12 min</span>
+          </div>
+          <div class="card strip">
+            <div class="row"><b>Dossier ACD</b><span class="chip">Foncier</span></div>
+            <span class="small">GSF-2026-0164 · Bingerville · lot 112</span>
+            <span class="small">Reçue il y a 40 min</span>
+          </div>
+          <div class="card strip">
+            <div class="row"><b>Séjour à Grand-Bassam</b><span class="chip n">3 services</span></div>
+            <span class="small">GSF-2026-0165 · résidence, véhicule, aéroport</span>
+            <span class="small">Reçue il y a 1 h</span>
+          </div>
+          <div class="card strip">
+            <div class="row"><b>Casier judiciaire</b><span class="chip n">Démarche</span></div>
+            <span class="small">GSF-2026-0166 · Tribunal du Plateau</span>
+            <span class="small">Reçue il y a 2 h</span>
+          </div>
+        </div>
+        <div class="tabs"><span class="on">À affecter</span><span>Équipe</span><span>Messages</span><span>Profil</span></div>
+      </div>
+      <figcaption><b>1. Demandes à affecter</b>Toutes les nouvelles demandes, les plus urgentes en haut</figcaption>
+    </figure>
+
+    <!-- C2 Choisir l'agent -->
+    <figure>
+      <div class="phone">
+        <div class="sb"><span>9:41</span><span>●●● 4G</span></div>
+        <div class="appbar"><span class="back">‹</span><span class="t">Affecter la demande</span></div>
+        <div class="scr">
+          <div class="card">
+            <div class="row"><b>Dossier ACD</b><span class="chip">Foncier</span></div>
+            <span class="small">GSF-2026-0164 · M. Diallo · Paris</span>
+            <span class="small">Terrain : Bingerville · lot 112</span>
+          </div>
+          <div class="field"><label>Agents suggérés · foncier</label></div>
+          <div class="card" style="border-color:var(--brand)">
+            <div class="agentbox"><span class="av">DK</span><div style="flex:1"><b>Didier K.</b><div class="small">Géomètre · cabinet GSF</div></div><span class="chip">Choisi</span></div>
+            <span class="small">4 dossiers en cours · zone Est</span>
+          </div>
+          <div class="card">
+            <div class="agentbox"><span class="av">AS</span><div style="flex:1"><b>Awa S.</b><div class="small">Géomètre · cabinet GSF</div></div></div>
+            <span class="small">7 dossiers en cours · zone Ouest</span>
+          </div>
+          <div class="field"><label>Autres agents</label><div class="input row"><span>Voir toute l'équipe</span><span class="muted">›</span></div></div>
+          <div class="field"><label>Note pour l'agent</label><div class="input" style="min-height:40px">Client joignable sur WhatsApp, préfère les échanges le soir.</div></div>
+          <span class="btn">Affecter à Didier K.</span>
+        </div>
+      </div>
+      <figcaption><b>2. Choisir l'agent</b>Agents suggérés selon le type de service, avec leur charge et leur zone. L'agent est notifié</figcaption>
+    </figure>
+
+  </div>
+  <p class="disclaimer">Le coordinateur peut aussi réaffecter une demande déjà en cours, par exemple si un agent est absent. Les mêmes actions existent dans le back-office.</p>
+</section>
+
+<!-- BACK-OFFICE -->
+<section id="backoffice">
+  <div class="sec-head">
+    <div class="group-title"><h2>Back-office web</h2><span class="tag">Coordinateur, managers et admins</span></div>
+    <p class="muted">Pilotage des demandes, catalogue, partenaires et finances. Toutes les demandes arrivent chez le coordinateur, qui les affecte aux agents, ici ou depuis l'app.</p>
+  </div>
+  <div class="scroll-x">
+    <div class="browser">
+      <div class="bbar"><i></i><i></i><i></i><span class="url">admin.gsfservice.ci/demandes</span></div>
+      <div class="bo">
+        <div class="side">
+          <div class="logo">GSF Admin</div>
+          <span>Tableau de bord</span>
+          <span class="on">Demandes</span>
+          <span>Catalogue de services</span>
+          <span>Partenaires</span>
+          <span>Biens et véhicules</span>
+          <span>Clients</span>
+          <span>Employés</span>
+          <span>Finances</span>
+          <span>Paramètres</span>
+        </div>
+        <div class="main">
+          <div class="kpis">
+            <div class="kpi"><span class="small">Demandes ouvertes</span><b>38</b></div>
+            <div class="kpi r"><span class="small">En retard</span><b>4</b></div>
+            <div class="kpi"><span class="small">Acomptes encaissés (nov.)</span><b>4,2 M</b></div>
+            <div class="kpi"><span class="small">Arrivées cette semaine</span><b>6</b></div>
+          </div>
+          <div class="tbl">
+            <div class="head"><b>Demandes</b><div class="chips"><span class="chip">Toutes</span><span class="chip n">À affecter · 4</span><span class="chip n">En retard · 4</span></div></div>
+            <table>
+              <thead><tr><th>N°</th><th>Client</th><th>Services</th><th>Statut</th><th>Agent</th><th>Échéance</th></tr></thead>
+              <tbody>
+                <tr><td class="mono">0161</td><td>K. N'Guessan · Lyon</td><td>Visite de terrain</td><td><span class="chip">Préparation</span></td><td>Awa D.</td><td>26 nov.</td></tr>
+                <tr><td class="mono">0158</td><td>M. Traoré · Montréal</td><td>Résidence</td><td><span class="chip n">Soumise</span></td><td><span class="chip o">Affecter</span></td><td>15 déc.</td></tr>
+                <tr><td class="mono">0153</td><td>F. Diallo · Paris</td><td>Accueil aéroport</td><td><span class="chip">Acompte payé</span></td><td>Awa D.</td><td>25 nov. 06:40</td></tr>
+                <tr><td class="mono">0151</td><td>A. Koné · Paris</td><td>Acte de naissance</td><td><span class="chip r">En retard</span></td><td>Yao K.</td><td>23 nov.</td></tr>
+                <tr><td class="mono">0142</td><td>A. Koné · Paris</td><td>Résidence, véhicule, aéroport</td><td><span class="chip">Préparation</span></td><td>Yao K.</td><td>18 déc.</td></tr>
+                <tr><td class="mono">0139</td><td>S. Kouassi · Abidjan</td><td>Casier judiciaire</td><td><span class="chip o">Propositions</span></td><td>Awa D.</td><td>28 nov.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="disclaimer">Autres écrans prévus : fiche demande (avec notes internes), configuration d'un service (formulaire, étapes, acompte par défaut), fiche partenaire (biens, commission, reversements), finances.</p>
+</section>
+
+<!-- TARIFS -->
+<section id="tarifs">
+  <div class="sec-head">
+    <span class="eyebrow">Tarifs</span>
+    <h2>Comment GSF fixe ses tarifs, et ce que voit le client</h2>
+    <p class="muted">GSF saisit ses tarifs dans le back-office, service par service, sans passer par un développeur. Une modification apparaît tout de suite dans l'app. Chaque service utilise l'un des quatre modes ci-dessous.</p>
+  </div>
+  <div class="open">
+    <div><b>Prix fixe</b><span>Exemples : accueil à l'aéroport (25 000 F en berline), extrait d'acte de naissance (10 000 F, plus les frais officiels).</span><span><b style="color:var(--ink);font-size:13px">Le client voit</b> le prix exact et paie tout à la commande, sans attendre de proposition. Pas d'acompte ni de solde.</span></div>
+    <div><b>Prix à l'unité</b><span>Par nuit, par jour ou par heure. Exemple : chauffeur à 15 000 F par jour.</span><span><b style="color:var(--ink);font-size:13px">Le client voit</b> le total se calculer pendant qu'il remplit sa demande.</span></div>
+    <div><b>À partir de</b><span>Résidences et véhicules, dont le prix dépend du bien proposé par le partenaire.</span><span><b style="color:var(--ink);font-size:13px">Le client voit</b> « dès 35 000 F / nuit », puis le prix exact dans la proposition.</span></div>
+    <div><b>Sur devis</b><span>Demandes particulières : destination hors Abidjan, démarche rare, « Autre demande ».</span><span><b style="color:var(--ink);font-size:13px">Le client voit</b> « Sur devis », puis l'agent lui envoie un devis détaillé.</span></div>
+  </div>
+  <div class="acd">
+    <div class="row" style="flex-wrap:wrap"><h3>Frais de service GSF</h3><span class="chip">Décidé : un montant selon le volume, sans pourcentage</span></div>
+    <div class="two">
+      <ul class="checklist">
+        <li><b>Affichés à part</b> <span>dans la fiche du service, la proposition, le récapitulatif et le reçu</span></li>
+        <li><b>Fixés par l'agent</b> <span>dans la proposition ou le devis, selon le volume de la prestation à fournir (durée, nombre de services, déplacements, documents…). Jamais en pourcentage</span></li>
+        <li><b>Services à prix fixe</b> <span>pas de proposition, donc un montant fixe réglé par GSF dans le back-office (par exemple 5 000 F pour une démarche)</span></li>
+      </ul>
+      <ul class="checklist">
+        <li><b>Payés avec l'acompte</b> <span>pour que GSF encaisse sa rémunération dès la commande</span></li>
+        <li><b>Prix fixe payé en totalité</b> <span>à la commande, même dans une demande qui mélange plusieurs services</span></li>
+        <li><b>Solde à l'arrivée</b> <span>il ne couvre que les prestations proposées (résidence, véhicule…)</span></li>
+      </ul>
+    </div>
+    <div class="card sum" style="max-width:420px;font-size:14px">
+      <div><span>Résidence 660 000 + véhicule 420 000</span><span>1 080 000 F</span></div>
+      <div><span>Accueil aéroport (prix fixe)</span><span>35 000 F</span></div>
+      <div><span>Frais de service GSF (fixés par l'agent)</span><span>75 000 F</span></div>
+      <div class="tot"><span>Total</span><span>1 190 000 F</span></div>
+      <div class="hl"><span>À la commande : 30 % de 1 080 000 + aéroport + frais</span><span>434 000 F</span></div>
+      <div><span>À l'arrivée</span><span>756 000 F</span></div>
+    </div>
+  </div>
+
+  <div class="scroll-x">
+    <div class="browser">
+      <div class="bbar"><i></i><i></i><i></i><span class="url">admin.gsfservice.ci/catalogue/accueil-aeroport/tarifs</span></div>
+      <div class="bo">
+        <div class="side">
+          <div class="logo">GSF Admin</div>
+          <span>Tableau de bord</span>
+          <span>Demandes</span>
+          <span class="on">Catalogue de services</span>
+          <span>Partenaires</span>
+          <span>Biens et véhicules</span>
+          <span>Clients</span>
+          <span>Employés</span>
+          <span>Finances</span>
+          <span>Paramètres</span>
+        </div>
+        <div class="main">
+          <div class="row"><h3>Accueil à l'aéroport</h3><span class="chip">Publié dans l'app</span></div>
+          <div class="bo-tabs"><span>Présentation</span><span>Formulaire</span><span>Étapes de suivi</span><span class="on">Tarifs</span></div>
+          <div class="cfg">
+            <div style="display:grid;gap:12px">
+              <div class="tbl">
+                <div class="head"><b>Formules · mode « Prix fixe »</b><span class="chip n">+ Ajouter une formule</span></div>
+                <table>
+                  <thead><tr><th>Formule</th><th>Capacité</th><th>Prix client</th><th>Coût interne</th><th>Marge</th></tr></thead>
+                  <tbody>
+                    <tr><td>Berline</td><td>1 à 3 pers.</td><td><b>25 000 F</b></td><td class="hidden-col">15 000 F</td><td>10 000 F</td></tr>
+                    <tr><td>SUV</td><td>1 à 4 pers.</td><td><b>35 000 F</b></td><td class="hidden-col">22 000 F</td><td>13 000 F</td></tr>
+                    <tr><td>Minibus</td><td>5 à 8 pers.</td><td><b>50 000 F</b></td><td class="hidden-col">32 000 F</td><td>18 000 F</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="tbl">
+                <div class="head"><b>Options et suppléments</b><span class="chip n">+ Ajouter</span></div>
+                <table>
+                  <thead><tr><th>Option</th><th>Type</th><th>Montant</th></tr></thead>
+                  <tbody>
+                    <tr><td>Arrivée entre 22 h et 6 h</td><td>Supplément fixe</td><td><b>+ 10 000 F</b></td></tr>
+                    <tr><td>Puce téléphonique chargée</td><td>Option à cocher</td><td><b>+ 5 000 F</b></td></tr>
+                    <tr><td>Destination hors Abidjan</td><td>Bascule sur devis</td><td><b>Sur devis</b></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div style="display:grid;gap:12px">
+              <div class="panel">
+                <b>Règles</b>
+                <div class="field"><label>Acompte</label><div class="input num">30 % à la commande</div></div>
+                <div class="field"><label>Frais de service GSF</label><div class="input num">5 000 F · montant fixe (service à prix fixe)</div></div>
+                <div class="field"><label>Haute saison</label><div class="input num">+ 20 % · 15 déc. → 15 janv.</div></div>
+                <div class="field"><label>Prix affiché au catalogue</label><div class="input">dès 25 000 FCFA</div></div>
+              </div>
+              <div class="panel">
+                <b>Visible par le client</b>
+                <span class="small">Formules, prix client, options, ce qui est inclus, frais de service GSF.</span>
+                <b>Jamais visible</b>
+                <span class="small">Coût interne, marge, prix des partenaires.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="two">
+    <div style="display:grid;gap:10px">
+      <h3>Ce que GSF règle pour chaque service</h3>
+      <ul class="checklist">
+        <li>Le <b>mode de tarification</b> <span>(fixe, à l'unité, à partir de, sur devis)</span></li>
+        <li>Les <b>formules</b> <span>(berline, SUV, minibus…)</span></li>
+        <li>Les <b>options et suppléments</b> <span>(nuit, urgence, hors Abidjan)</span></li>
+        <li>Les <b>zones</b> <span>(Abidjan, Grand-Bassam, Assinie, Yamoussoukro…)</span></li>
+        <li>Les <b>périodes</b> <span>(haute saison des fêtes, vacances d'été)</span></li>
+        <li>Les <b>frais officiels</b> des démarches, affichés à part <span>(timbres, droits de mairie)</span></li>
+        <li>Le <b>pourcentage d'acompte</b></li>
+        <li>Les <b>frais de service GSF</b> des services à prix fixe <span>(montant fixe). Pour les autres, l'agent les fixe dans la proposition</span></li>
+        <li>Pour les biens des partenaires : le <b>prix partenaire</b> et le <b>prix client</b> <span>(la différence est la marge de GSF)</span></li>
+      </ul>
+    </div>
+    <div style="display:grid;gap:10px">
+      <h3>Où le client voit les prix</h3>
+      <ol class="where">
+        <li><div><b>Catalogue</b><br><span>Un prix indicatif sous chaque service (« dès… », « Sur devis »)</span></div></li>
+        <li><div><b>Fiche du service</b><br><span>Grille complète, options et ce qui est inclus</span></div></li>
+        <li><div><b>Formulaire de demande</b><br><span>Estimation qui se met à jour selon ses choix</span></div></li>
+        <li><div><b>Proposition ou devis</b><br><span>Prix exact pour les résidences, véhicules et demandes sur devis</span></div></li>
+        <li><div><b>Récapitulatif avant paiement</b><br><span>Détail ligne par ligne, frais GSF sur une ligne à part, acompte et solde, équivalent en euros</span></div></li>
+        <li><div><b>Reçu</b><br><span>Envoyé après chaque paiement, dans l'app et par email</span></div></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ARCHITECTURE -->
+<section id="architecture">
+  <div class="sec-head">
+    <span class="eyebrow">Technique</span>
+    <h2>Architecture</h2>
+    <p class="muted">Une seule application Laravel fait tout côté serveur : l'API de l'app mobile, le back-office et le site vitrine. L'app mobile reste en React Native.</p>
+  </div>
+  <div class="arch">
+    <div class="layer">
+      <span class="lbl">Interfaces</span>
+      <div class="boxes">
+        <div class="box"><b>Application mobile</b><span class="tech">React Native · Expo</span><small>Une seule app iOS et Android, avec un rôle Client, Agent ou Coordinateur. Parle à l'API</small></div>
+        <div class="box"><b>Back-office</b><span class="tech">Laravel · Filament</span><small>Coordinateur, managers et admins, sur ordinateur. Généré par l'application Laravel</small></div>
+        <div class="box"><b>Site vitrine</b><span class="tech">Laravel · Blade</span><small>Présentation, référencement, liens vers les stores</small></div>
+      </div>
+    </div>
+    <div class="arrow">↓ API REST (Sanctum) + WebSocket temps réel (Reverb)</div>
+    <div class="layer">
+      <span class="lbl">Serveur</span>
+      <div class="boxes">
+        <div class="box core"><b>Application GSF</b><span class="tech">Laravel · PHP</span>
+          <div class="mods"><span>auth</span><span>rôles</span><span>catalogue</span><span>demandes</span><span>affectation</span><span>propositions</span><span>suivi</span><span>messagerie</span><span>paiements</span><span>partenaires</span><span>notifications</span><span>fichiers</span><span>journal</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="arrow">↓</div>
+    <div class="layer">
+      <span class="lbl">Données</span>
+      <div class="boxes">
+        <div class="box"><b>Base de données</b><span class="tech">PostgreSQL · Eloquent</span><small>Comptes, demandes, paiements, partenaires</small></div>
+        <div class="box"><b>Tâches de fond</b><span class="tech">Redis · Queues · Horizon</span><small>Relances, expirations, alertes de retard</small></div>
+        <div class="box"><b>Fichiers</b><span class="tech">Cloudflare R2 (S3)</span><small>Photos, documents chiffrés, reçus PDF</small></div>
+      </div>
+    </div>
+    <div class="layer">
+      <span class="lbl">Services externes</span>
+      <div class="boxes">
+        <div class="box tbd"><b>Paiement</b><span class="tech">À définir</span><small>Carte et Mobile Money</small></div>
+        <div class="box"><b>Notifications</b><span class="tech">Expo Push · WhatsApp · SMS</span><small>Nouvelle étape, message, paiement</small></div>
+        <div class="box"><b>Email</b><span class="tech">Resend</span><small>Codes, reçus, récapitulatifs</small></div>
+        <div class="box"><b>Supervision</b><span class="tech">Sentry</span><small>Erreurs app et serveur</small></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="two">
+    <div style="display:grid;gap:10px">
+      <h3>Organisation du code</h3>
+<pre class="tree">gsfservice/
+├─ server/         Laravel
+│  ├─ app/         modèles, API, règles métier
+│  ├─ app/Filament back-office
+│  ├─ resources/   site vitrine (Blade)
+│  └─ lang/        français, anglais
+├─ mobile/         React Native (Expo)
+│  ├─ src/app/     écrans (Expo Router)
+│  ├─ src/lib/     API, session, thème
+│  └─ src/components/
+├─ outils/         Composer (sur D:)
+└─ docs/           cadrage, schéma, MVP</pre>
+    </div>
+    <div style="display:grid;gap:10px">
+      <h3>Choix techniques</h3>
+      <div class="stack">
+        <table>
+          <tbody>
+            <tr><td>Serveur</td><td>Laravel, dernière version stable</td></tr>
+            <tr><td>Back-office</td><td>Filament (tableaux, formulaires, rôles)</td></tr>
+            <tr><td>Rôles et droits</td><td>spatie/laravel-permission</td></tr>
+            <tr><td>Connexion app</td><td>Sanctum · code SMS ou email, Google, Apple, Face ID</td></tr>
+            <tr><td>Temps réel</td><td>Laravel Reverb (messagerie, suivi)</td></tr>
+            <tr><td>Mobile</td><td>Expo Router · lancée avec Expo Go pendant le développement</td></tr>
+            <tr><td>Publication mobile</td><td>EAS Build et EAS Update</td></tr>
+            <tr><td>Hébergement</td><td>Choisi au moment du déploiement</td></tr>
+            <tr><td>Langues</td><td>Français, anglais</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DONNÉES -->
+<section id="donnees">
+  <div class="sec-head">
+    <span class="eyebrow">Technique</span>
+    <h2>Modèle de données</h2>
+    <p class="muted">Une demande contient une ou plusieurs prestations. Chaque prestation reçoit des propositions, et chaque étape du suivi peut porter des preuves. Le détail de chaque champ est dans docs/SCHEMA-BDD.md. Proposition à valider.</p>
+  </div>
+  <div class="ents">
+    <div class="ent-group">
+      <h3>Comptes et équipe</h3>
+      <div class="ent"><b>User</b><span>Compte de connexion : téléphone, email, Google, Apple, langue, double authentification</span></div>
+      <div class="ent"><b>ClientProfile</b><span>Pays de résidence, devise affichée (EUR, USD, CAD)</span></div>
+      <div class="ent"><b>Beneficiary</b><span>Proches du client sur place</span></div>
+      <div class="ent"><b>Employee</b><span>Rôle : agent, coordinateur, manager, admin. Compétences et zones, pour les suggestions d'affectation. Un géomètre est un agent</span></div>
+      <div class="ent"><b>Zone</b><span>Communes et villes : tarifs, zones des agents, terrains</span></div>
+    </div>
+    <div class="ent-group">
+      <h3>Mes biens</h3>
+      <div class="ent"><b>ClientAsset</b><span>Terrain du client : zone, lot, îlot, surface, GPS, type de document (attestation villageoise, ACD, titre foncier). Enregistré une fois, réutilisé par toutes ses demandes foncières</span></div>
+    </div>
+    <div class="ent-group">
+      <h3>Catalogue</h3>
+      <div class="ent"><b>ServiceCategory</b><span>Séjour, Démarches, Foncier, Autre</span></div>
+      <div class="ent"><b>Service</b><span>Mode de tarification, prix « dès… », acompte, frais GSF, bien ou procuration requis</span></div>
+      <div class="ent"><b>ServiceField</b><span>Champs du formulaire de demande</span></div>
+      <div class="ent"><b>ServiceStep</b><span>Étapes de suivi, avec un délai cible pour les alertes de retard</span></div>
+      <div class="ent"><b>PriceRule</b><span>Formules : prix client, coût interne <i>caché</i>, zone</span></div>
+      <div class="ent"><b>ServiceOption · OfficialFee · SeasonRule</b><span>Suppléments, frais officiels, haute saison</span></div>
+    </div>
+    <div class="ent-group">
+      <h3>Partenaires</h3>
+      <div class="ent"><b>Partner</b><span>Propriétaires de résidences et loueurs de véhicules uniquement</span></div>
+      <div class="ent"><b>PartnerProperty · PartnerVehicle</b><span>Prix partenaire <i>caché</i> et prix client</span></div>
+      <div class="ent"><b>Payout</b><span>Reversements aux partenaires</span></div>
+    </div>
+    <div class="ent-group">
+      <h3>Demandes</h3>
+      <div class="ent"><b>Request</b><span>N° GSF-2026-0142, client, statut, un seul agent pour toute la demande, montants figés à l'acceptation</span></div>
+      <div class="ent"><b>Assignment</b><span>Historique des affectations : agent, coordinateur, note, réaffectation</span></div>
+      <div class="ent"><b>RequestItem</b><span>Une prestation : service, terrain concerné, réponses au formulaire, étape atteinte</span></div>
+      <div class="ent"><b>Proposal · ProposalLine</b><span>Options et devis, date d'expiration, coût partenaire <i>caché</i></span></div>
+      <div class="ent"><b>TimelineEvent</b><span>Fil de suivi : statuts, étapes, paiements, visibles ou non par le client</span></div>
+      <div class="ent"><b>Inspection</b><span>Visite de terrain, état des lieux, remise de véhicule : GPS, contrôles, signature, rapport PDF</span></div>
+      <div class="ent"><b>Mandate</b><span>Procuration signée dans l'app</span></div>
+      <div class="ent"><b>Message · InternalNote</b><span>Fil avec le client, notes internes <i>cachées</i></span></div>
+      <div class="ent"><b>Attachment</b><span>Photos, vidéos, documents chiffrés, notes vocales, reçus</span></div>
+    </div>
+    <div class="ent-group">
+      <h3>Argent et transverse</h3>
+      <div class="ent"><b>Payment</b><span>Acompte, solde, paiement total ou remboursement. Dans l'app ou sur place, encaissé par l'agent</span></div>
+      <div class="ent"><b>Review · Notification</b><span>Avis du client, notifications push, WhatsApp, SMS, email</span></div>
+      <div class="ent"><b>AuditLog · Setting</b><span>Journal de toutes les actions, paramètres (acompte 30 %, taux de change)</span></div>
+    </div>
+  </div>
+  <p class="disclaimer"><i style="font-style:normal;color:var(--accent);font-weight:600">Caché</i> : champ jamais envoyé à l'app client. Montants en FCFA entiers, figés au moment où le client accepte.</p>
+</section>
+
+<!-- STATUTS -->
+<section id="statuts">
+  <div class="sec-head">
+    <span class="eyebrow">Fonctionnement</span>
+    <h2>Statuts d'une demande</h2>
+    <p class="muted">Ces statuts sont communs à toutes les demandes. Les étapes de terrain (dépôt en mairie, état des lieux, remise des clés…) sont configurées pour chaque service, à l'intérieur du statut « Préparation ».</p>
+  </div>
+  <div class="statuses">
+    <span>Soumise</span><em>→</em><span>Prise en charge</span><em>→</em><span>Recherche</span><em>→</em><span>Propositions envoyées</span><em>→</em><span>Proposition acceptée</span><em>→</em><span class="pay">Acompte payé</span><em>→</em><span>Préparation</span><em>→</em><span class="pay">Solde payé</span><em>→</em><span>En cours</span><em>→</em><span>Terminée</span><em>→</em><span class="end">Clôturée</span>
+  </div>
+  <div class="statuses"><em>Prix fixe :</em><span>Soumise</span><em>→</em><span>Prise en charge</span><em>→</em><span class="pay">Payée en totalité</span><em>→</em><span>Préparation</span><em>→</em><span>En cours</span><em>→</em><span>Terminée</span><em>→</em><span class="end">Clôturée</span></div>
+  <div class="statuses"><em>À tout moment :</em><span>En attente du client</span><span>Annulée</span><span>Remboursée</span><span>Litige</span></div>
+</section>
+
+<!-- OUVERT -->
+<section id="ouvert">
+  <div class="sec-head">
+    <span class="eyebrow">À trancher plus tard</span>
+    <h2>Points ouverts</h2>
+  </div>
+  <div class="open">
+    <div><b>Prestataire de paiement</b><span>Carte internationale et Mobile Money. L'architecture prévoit un module indépendant, branché le moment venu.</span></div>
+    <div><b>Montants</b><span>GSF saisit lui-même ses tarifs. Les montants des maquettes sont des exemples. Frais de service fixés par l'agent selon le volume de la prestation.</span></div>
+    <div><b>Taille de l'équipe</b><span>Toutes les demandes sont centralisées par un coordinateur, qui les affecte aux agents (géomètres du cabinet compris), depuis le back-office ou l'app.</span></div>
+    <div><b>Foncier</b><span>Étapes du dossier ACD et tarifs à valider avec GSF. Tout le foncier est géré par le cabinet de géomètres de GSF, sans partenaire externe.</span></div>
+    <div><b>Conformité</b><span>Déclaration à l'ARTCI (loi ivoirienne de 2013) et RGPD pour les clients en Europe.</span></div>
+  </div>
+</section>
+</div>

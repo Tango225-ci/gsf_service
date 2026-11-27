@@ -1,0 +1,15 @@
+# Outils installés pour le projet (gros, ou propres à la machine)
+/outils/composer/composer.phar
+/outils/composer/cache/
+/outils/composer/home/
+/outils/npm-cache/
+
+# Secrets
+.env
+.env.*
+!.env.example
+!.env.exemple
+
+# Divers
+.DS_Store
+Thumbs.db
